@@ -42,7 +42,7 @@
             @enderror
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-outline-primary col-5 mt-3">tambahkan data</button>
+            <button type="submit" class="btn btn-outline-primary col-5 mt-3">tambahkan data sodara</button>
         </div>
     </form>
 </div>
