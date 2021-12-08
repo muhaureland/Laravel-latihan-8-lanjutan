@@ -5,7 +5,7 @@
 </div>
 
 <div class="col-lg-8">
-    <form method="POST" action="/dashboard/posts/{{ $post->slug }}">
+    <form method="POST" action="/dashboard/posts/{{ $post->slug }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group">
@@ -27,6 +27,19 @@
             @enderror
         </div>
         <div class="form-group">
+            <label for="gambar">Thumbnail</label>
+            <input type="hidden" name="oldGambar" value="{{ $post->gambar }}">
+                @if ($post->gambar)
+                    <img src="{{ asset('storage/' . $post->gambar) }}" class="img-preview img-fluid">
+                @else
+                    <img class="img-preview img-fluid">
+                @endif
+            <input type="file" class="form-control @error('gambar') is-invalid @enderror" id="gambar" name="gambar" onchange="previewImage()">
+            @error('gambar')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="form-group">
             <label for="body">Body</label>
             <input id="body" type="hidden" name="body" class="@error('body') is-invalid @enderror" value="{{ old('body', $post->body) }}">
             <trix-editor input="body"></trix-editor>
@@ -44,5 +57,18 @@
     document.addEventListener('trix-file-accept', function(e){
         e.prevenDefault();
     })
+
+    function previewImage() 
+    {
+        const image = document.querySelector('#gambar')
+        const imgPreview = document.querySelector('.img-preview');
+        imgPreview.style.display = 'block';
+        const oFReader = new FileReader();
+        oFReader.readAsDataURL(image.files[0]);
+        oFReader.onload = function(oFREvent)
+            {
+                imgPreview.src = oFREvent.target.result;
+            }
+    }
 </script>
 @endsection

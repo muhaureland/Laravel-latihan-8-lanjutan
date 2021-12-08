@@ -28,7 +28,8 @@
         </div>
         <div class="form-group">
             <label for="gambar">Thumbnail</label>
-            <input type="file" class="form-control @error('gambar') is-invalid @enderror" id="gambar" name="gambar">
+            <img class="img-preview img-fluid">
+            <input type="file" class="form-control @error('gambar') is-invalid @enderror" id="gambar" name="gambar" onchange="previewImage()">
             @error('gambar')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -51,5 +52,18 @@
     document.addEventListener('trix-file-accept', function(e){
         e.prevenDefault();
     })
+
+    function previewImage() 
+    {
+        const image = document.querySelector('#gambar')
+        const imgPreview = document.querySelector('.img-preview');
+        imgPreview.style.display = 'block';
+        const oFReader = new FileReader();
+        oFReader.readAsDataURL(image.files[0]);
+        oFReader.onload = function(oFREvent)
+            {
+                imgPreview.src = oFREvent.target.result;
+            }
+    }
 </script>
 @endsection

@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 
@@ -132,6 +133,15 @@ class DashboardPostController extends Controller
             
         ]);
 
+        if($request->file('gambar'))
+        {
+            if($request->oldGambar)
+            {
+                Storage::delete($request->oldGambar);
+            }
+            $validatedData['gambar'] = $request->file('gambar')->store('post-gambar');
+        }
+
         $validatedData['user_id'] = auth()->user()->id;
         $validatedData['slug'] = SlugService::createSlug(Post::class, 'slug', $request->title);
         $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
@@ -150,6 +160,10 @@ class DashboardPostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if($post->gambar)
+        {
+            Storage::delete($post->gambar);
+        }
         Post::destroy($post->id);
         return redirect('dashboard/posts')->with('status', 'menghapus data berhasil!');
     }
