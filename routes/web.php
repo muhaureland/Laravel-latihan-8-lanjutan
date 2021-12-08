@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\DashboardPostController;
 
 /*
@@ -65,8 +66,16 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/dashboard', function(){
-    return view('dashboard.index');
-})->middleware('auth');
 
-Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/dashboard', function(){
+        return view('dashboard.index');
+    });
+    Route::resource('/dashboard/posts', DashboardPostController::class);
+});
+
+// except untuk mematikan route yg tidak digunakan
+// //route middleware yg digabung dengan gate
+// //route yg dibuat dengan authorization gate yg dibuat di 
+// //App\Provider\AppServiceProvider 
+Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('is_admin');

@@ -3,7 +3,12 @@
 namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
+
 use Illuminate\Support\ServiceProvider;
+use App\Models\User;
+
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +29,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        //untuk buat pagination dengan bootstrap maka harus di definisikan dulu
         Paginator::useBootstrap();
+
+        Gate::define('ikoAdmin', function(User $user){
+            return $user->is_admin;
+        });
     }
 }
