@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
-use App\Models\Category;
-use Illuminate\Support\Str;
-use Illuminate\Foundation\Auth\User;
+// use App\Models\Category;
+// use Illuminate\Support\Str;
+// use Illuminate\Foundation\Auth\User;
+// use Illuminate\Database\Eloquent\Model;
+// use Cviebrock\EloquentSluggable\Sluggable;
+// use Dotenv\Repository\Adapter\GuardedWriter;
+// use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Dotenv\Repository\Adapter\GuardedWriter;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
 
@@ -24,22 +28,12 @@ class Post extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        // if (request('search')) {
-        //     return $query->where('title', 'like', '%' . request('search') . '%')
-        //                 ->orWhere('body', 'like', '%' . request('search') . '%');
-        // }
 
-        // if (isset($filters['search']) ? $filters['search'] : false) {
-        //     return $query->where('title', 'like', '%' . $filters['search'] . '%')
-        //                 ->orWhere('body', 'like', '%' . $filters['search'] . '%');
-        // }
+        // $query->when($filters['search'] ?? false, function($query, $search){
+        //     return $query->where('title', 'like', '%' . $search . '%')
+        //             ->orWhere('body', 'like', '%' . $search . '%');
 
-        $query->when($filters['search'] ?? false, function($query, $search){
-            return $query->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('body', 'like', '%' . $search . '%');
-
-        });
-        
+        // });
         // $query->when($filters['category'] ?? false, function($query, $category){
         //     return $query->whereHas('category', function($query) use($category){
         //         $query->where('slug', $category);
@@ -52,7 +46,7 @@ class Post extends Model
         // });
 
         $query->when($filters['search'] ?? false, fn($query, $search)
-            => $query->where('title', 'like', '%' . $search . '%')
+            => $query->where('title', $search)
                     ->orWhere('body', 'like', '%' . $search . '%')
         );
         $query->when($filters['category'] ?? false, fn($query, $category)

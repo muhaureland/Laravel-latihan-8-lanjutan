@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 
+
 class Category extends Model
 {
     use HasFactory, Sluggable;
 
     protected $guarded = ['id'];
+    
     public function posts()
     {
         return $this->hasMany(Post::class);

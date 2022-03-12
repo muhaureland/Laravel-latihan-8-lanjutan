@@ -110,4 +110,11 @@ class PostController extends Controller
     {
         //
     }
+
+    public function kategori()
+    {
+        return view('categories', [
+            'categories' => Category::all()->with()
+        ]);
+    }
 }

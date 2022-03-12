@@ -27,7 +27,7 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="gambar">Thumbnail</label>
+            <label">Thumbnail</label>
             <img class="img-preview img-fluid">
             <input type="file" class="form-control @error('gambar') is-invalid @enderror" id="gambar" name="gambar" onchange="previewImage()">
             @error('gambar')
@@ -35,12 +35,14 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="body">Body</label>
-            <input id="body" type="hidden" name="body" class="@error('body') is-invalid @enderror" value="{{ old('body') }}">
-            <trix-editor input="body"></trix-editor>
-            @error('body')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+            <label>Body</label>
+            <div class="col-sm-12 col-md-7">
+                <input type="hidden" class="form-control @error('body') is-invalid @enderror" name="body" id="body" value="{{ old('body') }}">
+                <trix-editor input="body"></trix-editor>
+                @error('body')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-outline-primary col-5 mt-3">tambahkan data sodara</button>

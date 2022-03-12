@@ -28,10 +28,10 @@
             <td><a href="/dashboard/categories/{{ $post->slug }}" class="badge bg-info"><span data-feather="eye"></span></a></td>
             <td><a href="/dashboard/categories/{{ $post->slug }}/edit" class="badge bg-warning"><span data-feather="edit"></span></a></td>
             <td>
-                <form action="/dashboard/categories/{{ $post->slug }}" method="post" class="d-inline">
+                <form action="/dashboard/categories/{{ $post->slug }}" method="post" class="d-inline" id="btn-submit">
                 @method('delete')
                 @csrf
-                <button class="badge bg-danger border-0" onclick="return confirm('apakah iya ?')"><span data-feather="x-circle"></span></button>
+                <button class="badge bg-danger border-0" ><span data-feather="x-circle"></span></button>
                 </form>
             </td>
         </tr>

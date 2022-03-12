@@ -27,18 +27,19 @@ class DatabaseSeeder extends Seeder
             ]);
 
         User::factory(3)->create();
-        Category::create([
-            'name'  => 'web programming',
-            'slug'  => 'web-programming'
-        ]);
-        Category::create([
-            'name'  => 'personal',
-            'slug'  => 'personal'
-        ]);
-        Category::create([
-            'name'  => 'design kreative',
-            'slug'  => 'design-kreative'
-        ]);
+        Category::factory(30)->create();
+        // Category::create([
+        //     'name'  => 'web programming',
+        //     'slug'  => 'web-programming'
+        // ]);
+        // Category::create([
+        //     'name'  => 'personal',
+        //     'slug'  => 'personal'
+        // ]);
+        // Category::create([
+        //     'name'  => 'design kreative',
+        //     'slug'  => 'design-kreative'
+        // ]);
         Post::factory(20)->create();
 
         // Post::create([

@@ -10,7 +10,9 @@
 @endif
 
 <div class="table-responsive">
-    <a href="/dashboard/posts/create" class="btn btn-primary">Create new post</a>
+    {{-- <a href="/dashboard/posts/create" class="btn btn-primary">Create new post</a> --}}
+    <a href="{{ route('posts.create') }}" class="btn btn-primary">Create new post</a>
+
     {{-- <a href="{{ route('dashboard.posts.create') }}" class="btn btn-primary">Create new post</a> --}}
     <table class="table table-striped table-sm">
     <thead>
@@ -22,15 +24,16 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($posts as $post)
+        @foreach ($posts as $item)
         <tr>
         <td>{{ $loop->iteration }}</td>
-        <td>{{ $post->title }}</td>
-        <td>{{ $post->category->name }}</td>
-            <td><a href="/dashboard/posts/{{ $post->slug }}" class="badge bg-info"><span data-feather="eye"></span></a></td>
-            <td><a href="/dashboard/posts/{{ $post->slug }}/edit" class="badge bg-warning"><span data-feather="edit"></span></a></td>
+        <td>{{ $item->title }}</td>
+        <td>{{ $item->category->name }}</td>
+            <td><a href="/dashboard/posts/{{ $item->slug }}" class="badge bg-info"><span data-feather="eye"></span></a></td>
+            {{-- <td><a href="/dashboard/posts/{{ $post->slug }}/edit" class="badge bg-warning"><span data-feather="edit"></span></a></td> --}}
+            <td><a href="{{ route('posts.edit', $item->slug) }}" class="badge bg-warning"><span data-feather="edit"></span></a></td>
             <td>
-                <form action="/dashboard/posts/{{ $post->slug }}" method="post" class="d-inline">
+                <form action="/dashboard/posts/{{ $item->slug }}" method="post" class="d-inline">
                 @method('delete')
                 @csrf
                 <button class="badge bg-danger border-0" onclick="return confirm('apakah iya ?')"><span data-feather="x-circle"></span></button>
